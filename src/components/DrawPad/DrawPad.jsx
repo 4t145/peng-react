@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import io from 'socket.io-client';
 import './DrawPad.css'
 export default class DrawPad extends React.Component {
     constructor(props) {
@@ -58,10 +59,12 @@ export default class DrawPad extends React.Component {
 
     drawAll  = () => {
         const cvs = this.canvas.current;
-        const ctx = cvs.getContext("2d");
-        this.state.cmds.forEach(cmd => {
-            this.drawCmd(ctx, cmd);
-        });
+        if(cvs) {
+            const ctx = cvs.getContext("2d");
+            this.state.cmds.forEach(cmd => {
+                this.drawCmd(ctx, cmd);
+            });
+        }
     };
 
     drawUnsaved = () => {
